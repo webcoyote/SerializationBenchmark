@@ -65,7 +65,7 @@ namespace SerializationBenchmark
 
         [ProtoMember(4)]
         [Key(3)]
-        public IList<ServicePlan> ServicePlans { get; set; }
+        public IList<ServicePlan>? ServicePlans { get; set; }
 
         [ProtoMember(5)]
         [Key(4)]
