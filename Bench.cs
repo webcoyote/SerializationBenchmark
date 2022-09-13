@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define SKIP_JSON
+
+using System;
 using System.Buffers;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
@@ -17,10 +19,13 @@ namespace SerializationBenchmark
         private static readonly BufferWriter<byte> _protobufnet_pickled;
         private static readonly BufferWriter<byte> _protobuf_plain;
         private static readonly BufferWriter<byte> _protobuf_pickled;
+
+#if !SKIP_JSON
         private static readonly byte[] _systemtextjson_plain;
         private static readonly BufferWriter<byte> _systemtextjson_pickled;
         private static readonly BufferWriter<byte> _newtonsoft_plain;
         private static readonly BufferWriter<byte> _newtonsoft_pickled;
+#endif
 
         static Bench()
         {
@@ -31,10 +36,12 @@ namespace SerializationBenchmark
             _protobufnet_pickled = Serializers.ProtobufNet_SerializePickled(TestData.TestValue);
             _protobuf_plain = Serializers.Protobuf_SerializePlain(TestData.TestValuePB);
             _protobuf_pickled = Serializers.Protobuf_SerializePickled(TestData.TestValuePB);
+#if !SKIP_JSON
             _systemtextjson_plain = Serializers.SystemTextJson_SerializePlain(TestData.TestValue);
             _systemtextjson_pickled = Serializers.SystemTextJson_SerializePickled(TestData.TestValue);
             _newtonsoft_plain = Serializers.Newtonsoft_SerializePlain(TestData.TestValue);
             _newtonsoft_pickled = Serializers.Newtonsoft_SerializePickled(TestData.TestValue);
+#endif
 
             Console.WriteLine($"_msgpack_plain         : {_msgpack_plain.WrittenCount} bytes");
             Console.WriteLine($"_msgpack_comp          : {_msgpack_comp.WrittenCount} bytes");
@@ -43,10 +50,12 @@ namespace SerializationBenchmark
             Console.WriteLine($"_protobufnet_pickled   : {_protobufnet_pickled.WrittenCount} bytes");
             Console.WriteLine($"_protobuf_plain        : {_protobuf_plain.WrittenCount} bytes");
             Console.WriteLine($"_protobuf_pickled      : {_protobuf_pickled.WrittenCount} bytes");
+#if !SKIP_JSON
             Console.WriteLine($"_systemtextjson_plain  : {_systemtextjson_plain.Length} bytes");
             Console.WriteLine($"_systemtextjson_pickled: {_systemtextjson_pickled.WrittenCount} bytes");
             Console.WriteLine($"_newtonsoft_plain      : {_newtonsoft_plain.WrittenCount} bytes");
             Console.WriteLine($"_newtonsoft_pickled    : {_newtonsoft_pickled.WrittenCount} bytes");
+#endif
         }
 
         [Benchmark]
@@ -119,6 +128,7 @@ namespace SerializationBenchmark
             }
         }
 
+#if !SKIP_JSON
         [Benchmark]
         public void SystemTextJson_SerializePlain()
         {
@@ -156,6 +166,7 @@ namespace SerializationBenchmark
                 Serializers.Return(br);
             }
         }
+#endif
 
         [Benchmark]
         public void MessagePack_DeserializePlain()
@@ -222,6 +233,7 @@ namespace SerializationBenchmark
             }
         }
 
+#if !SKIP_JSON
         [Benchmark]
         public void SystemTextJson_DeserializePlain()
         {
@@ -257,6 +269,7 @@ namespace SerializationBenchmark
                 _ = Serializers.Newtonsoft_DeserializedPickled<UserLicensesResponse>(_newtonsoft_pickled.WrittenSpan);
             }
         }
+#endif
 
         static void Main(string[] args)
         {
