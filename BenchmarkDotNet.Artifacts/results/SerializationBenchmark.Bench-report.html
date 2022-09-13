@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>SerializationBenchmark.Bench-20220913-110333</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.13.2, OS=Windows 11 (10.0.22000.856/21H2)
+AMD Ryzen 7 3800X, 1 CPU, 16 logical and 8 physical cores
+.NET SDK=6.0.302
+  [Host]     : .NET 5.0.13 (5.0.1321.56516), X64 RyuJIT AVX2
+  DefaultJob : .NET 5.0.13 (5.0.1321.56516), X64 RyuJIT AVX2
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>                     Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th> Gen0</th><th>Gen1</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>MessagePack_SerializePlain</td><td>240.8 ms</td><td>1.64 ms</td><td>1.53 ms</td><td>1000.0000</td><td>-</td><td>10080339 B</td>
+</tr><tr><td>MessagePack_SerializeCompressed</td><td>387.4 ms</td><td>6.93 ms</td><td>6.14 ms</td><td>1000.0000</td><td>-</td><td>10080288 B</td>
+</tr><tr><td>MessagePack_SerializePickled</td><td>562.7 ms</td><td>2.94 ms</td><td>2.61 ms</td><td>1000.0000</td><td>-</td><td>10080760 B</td>
+</tr><tr><td>ProtobufNet_SerializePlain</td><td>949.4 ms</td><td>6.86 ms</td><td>6.42 ms</td><td>5000.0000</td><td>-</td><td>46401736 B</td>
+</tr><tr><td>ProtobufNet_SerializePickled</td><td>1,280.5 ms</td><td>14.83 ms</td><td>13.87 ms</td><td>5000.0000</td><td>-</td><td>46401576 B</td>
+</tr><tr><td>Protobuf_SerializePlain</td><td>316.7 ms</td><td>2.84 ms</td><td>2.66 ms</td><td>-</td><td>-</td><td>144 B</td>
+</tr><tr><td>Protobuf_SerializePickled</td><td>663.2 ms</td><td>3.02 ms</td><td>2.36 ms</td><td>-</td><td>-</td><td>288 B</td>
+</tr><tr><td>SystemTextJson_SerializePlain</td><td>618.2 ms</td><td>4.90 ms</td><td>4.35 ms</td><td>28000.0000</td><td>-</td><td>238081576 B</td>
+</tr><tr><td>SystemTextJson_SerializePickled</td><td>1,052.4 ms</td><td>8.89 ms</td><td>8.32 ms</td><td>2000.0000</td><td>-</td><td>20481576 B</td>
+</tr><tr><td>Newtonsoft_SerializePlain</td><td>1,431.2 ms</td><td>8.25 ms</td><td>7.71 ms</td><td>144000.0000</td><td>24000.0000</td><td>1209361736 B</td>
+</tr><tr><td>Newtonsoft_SerializePickled</td><td>1,849.9 ms</td><td>11.96 ms</td><td>11.19 ms</td><td>118000.0000</td><td>14000.0000</td><td>991841576 B</td>
+</tr><tr><td>MessagePack_DeserializePlain</td><td>436.1 ms</td><td>5.58 ms</td><td>5.22 ms</td><td>56000.0000</td><td>7000.0000</td><td>474081576 B</td>
+</tr><tr><td>MessagePack_DeserializeCompressed</td><td>479.9 ms</td><td>4.51 ms</td><td>4.22 ms</td><td>56000.0000</td><td>7000.0000</td><td>474081864 B</td>
+</tr><tr><td>MessagePack_DeserializePickled</td><td>480.9 ms</td><td>4.47 ms</td><td>4.18 ms</td><td>56000.0000</td><td>7000.0000</td><td>474082120 B</td>
+</tr><tr><td>ProtobufNet_DeserializePlain</td><td>622.7 ms</td><td>2.62 ms</td><td>2.45 ms</td><td>60000.0000</td><td>7000.0000</td><td>506241152 B</td>
+</tr><tr><td>ProtobufNet_DeserializePickled</td><td>667.9 ms</td><td>5.71 ms</td><td>5.34 ms</td><td>60000.0000</td><td>7000.0000</td><td>506242440 B</td>
+</tr><tr><td>Protobuf_DeserializePlain</td><td>427.2 ms</td><td>4.71 ms</td><td>4.41 ms</td><td>64000.0000</td><td>8000.0000</td><td>535304624 B</td>
+</tr><tr><td>Protobuf_DeserializePickled</td><td>455.9 ms</td><td>4.09 ms</td><td>3.62 ms</td><td>64000.0000</td><td>8000.0000</td><td>535304912 B</td>
+</tr><tr><td>SystemTextJson_DeserializePlain</td><td>1,345.9 ms</td><td>10.26 ms</td><td>9.60 ms</td><td>62000.0000</td><td>8000.0000</td><td>523201576 B</td>
+</tr><tr><td>SystemTextJson_DeserializePickled</td><td>1,357.5 ms</td><td>8.56 ms</td><td>8.00 ms</td><td>62000.0000</td><td>8000.0000</td><td>523201576 B</td>
+</tr><tr><td>Newtonsoft_DeserializePlain</td><td>2,824.2 ms</td><td>11.06 ms</td><td>10.34 ms</td><td>127000.0000</td><td>31000.0000</td><td>1071041648 B</td>
+</tr><tr><td>Newtonsoft_DeserializePickled</td><td>2,829.8 ms</td><td>8.75 ms</td><td>7.75 ms</td><td>127000.0000</td><td>31000.0000</td><td>1071121648 B</td>
+</tr></tbody></table>
+</body>
+</html>
